@@ -1,14 +1,11 @@
 language: csharp
-solution: ./codevalr-api/codevalr-api.sln
 mono:
-latest
-install:
-curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-dnvm upgrade
-dnu restore
+ - beta
+
+install: curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | sh && source ~/.dnx/dnvm/dnvm.sh && dnvm upgrade
+
 script:
-dnu build ./test/DivineChMS.Test/project.json
-dnx -p ./test/DivineChMS.Test test
+  cd codevalr-api/src/codevalr && dnu restore && dnu build && cd ../codevalr-api && dnu restore && dnu build
 
 # whitelist
 branches:
