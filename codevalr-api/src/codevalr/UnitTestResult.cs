@@ -7,7 +7,12 @@ namespace codevalr
 {
 	public class UnitTestResult
 	{
-		public bool IsPassing { get; }
-		public List<string> Messages { get; }
+		public UnitTestResult()
+		{
+			Messages = new List<string>();
+		}
+
+		public bool IsPassing { get; set; }
+		public List<string> Messages { get; set; }
 	}
 }
