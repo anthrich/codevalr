@@ -41,7 +41,7 @@ install:
 
   # Restore dependencies
   - dotnet restore
-  - dotnet build -c $CONFIGURATION -f netcoreapp1.0 ./codevalr-api/src/codevalr
+  - dotnet build -c $CONFIGURATION -f netcoreapp1.0 ./src/codevalr
 
 # whitelist
 branches:
