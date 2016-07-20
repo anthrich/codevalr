@@ -1,5 +1,15 @@
 language: generic
 
+addons:
+  apt:
+    packages:
+    - gettext
+    - libcurl4-openssl-dev
+    - libicu-dev
+    - libssl-dev
+    - libunwind8
+    - zlib1g
+
 before_install:
   - export DOTNET_SDK_URL="https://go.microsoft.com/fwlink/?LinkID=809129"
   - export DOTNET_INSTALL_DIR="$PWD/.dotnetcli"
