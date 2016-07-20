@@ -10,6 +10,17 @@ addons:
     - libunwind8
     - zlib1g
 
+matrix:
+  include:
+    - os: linux
+      dist: trusty # Ubuntu 14.04
+      sudo: required
+      env: CONFIGURATION=Debug
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: CONFIGURATION=Release
+
 before_install:
   - export DOTNET_SDK_URL="https://go.microsoft.com/fwlink/?LinkID=809129"
   - export DOTNET_INSTALL_DIR="$PWD/.dotnetcli"
