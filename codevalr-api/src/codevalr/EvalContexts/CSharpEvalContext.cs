@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 using System.IO;
+using System.Runtime.Loader;
 
 namespace codevalr.EvalContexts
 {
@@ -37,9 +37,12 @@ namespace codevalr.EvalContexts
 		{
 			var unitTestResult = new UnitTestResult();
 
-			using (var ms = new MemoryStream())
+			string filename = Path.GetRandomFileName();
+			using (var ms = new FileStream(filename, FileMode.CreateNew))
 			{
 				EmitResult result = comp.Emit(ms);
+				ms.Flush();
+
 
 				if (!result.Success)
 				{
@@ -55,16 +58,12 @@ namespace codevalr.EvalContexts
 				}
 				else
 				{
-					ms.Seek(0, SeekOrigin.Begin);
-					Assembly assembly = Assembly.Load(ms.ToArray());
+					Assembly assembly = Assembly.Load(AssemblyLoadContext.GetAssemblyName(filename));
 
 					Type type = assembly.GetType("RoslynCompileSample.Writer");
 					object obj = Activator.CreateInstance(type);
-					type.InvokeMember("Write",
-						BindingFlags.Default | BindingFlags.InvokeMethod,
-						null,
-						obj,
-						new object[] { "Hello World" });
+					type.GetTypeInfo().GetDeclaredMethod("Write")
+						.Invoke(obj, null);
 				}
 			}
 
@@ -75,13 +74,13 @@ namespace codevalr.EvalContexts
 		{
 			string codeFile = $"{codeChallenge.AnswerPreamble} {codeChallenge.Answer} {codeChallenge.AnswerPostamble}";
 			string unitTestFile = $"{unitTest.Preamble} {unitTest.Test} {unitTest.Postamble}";
-			SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(codeFile + unitTest);
+			SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(codeFile + unitTestFile);
 
 			string assemblyName = Path.GetRandomFileName();
 			MetadataReference[] references = new MetadataReference[]
 			{
-				MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-				MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location)
+				MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(Enumerable).GetTypeInfo().Assembly.Location)
 			};
 
 			CSharpCompilation comp = CSharpCompilation.Create(

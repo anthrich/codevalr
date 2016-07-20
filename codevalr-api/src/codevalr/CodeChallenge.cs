@@ -16,10 +16,12 @@ namespace codevalr
 		public string AnswerPreamble { get; private set; }
 		public string Answer { get; private set; }
 		public string AnswerPostamble { get; private set; }
+
 		public IEnumerable<UnitTest> PublicUnitTests => _publicUnitTests;
-		private List<UnitTest> _publicUnitTests;
+		private readonly List<UnitTest> _publicUnitTests;
+
 		public IEnumerable<UnitTest> PrivateUnitTests => _privateUnitTests;
-		private List<UnitTest> _privateUnitTests;
+		private readonly List<UnitTest> _privateUnitTests;
 
 
 		public void SetAnswerPreamble(string preamble)

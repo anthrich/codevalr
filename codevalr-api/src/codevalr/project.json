@@ -2,23 +2,18 @@
 	"version": "1.0.0-*",
 	"description": "codevalr Class Library",
 	"dependencies": {
-		"Microsoft.CodeAnalysis.CSharp": "1.0.0-*",
-		"Microsoft.CSharp": "4.0.0",
-		"Microsoft.Framework.Runtime.Roslyn.Abstractions": "1.0.0-*"
+		"Microsoft.CSharp": "4.0.1-rc2-24027",
+		"System.Collections": "4.0.11",
+		"Microsoft.CodeAnalysis": "2.0.0-beta3",
+		"system.runtime.loader": "4.0.0-beta-23123"
 	},
-	"authors": [ "Anth" ],
-	"tags": [ "" ],
-	"projectUrl": "",
-	"licenseUrl": "",
 
 	"frameworks": {
-		"dnx451": {
-			"frameworkAssemblies": {
-				"System.Runtime": "4.0.10.0",
-				"System.Threading.Tasks": "4.0.0.0",
-				"System.Text.Encoding": "4.0.0.0",
-				"System.IO": "4.0.0.0"
-			}
+		"netcoreapp1.0": {
+			"imports": [
+				"dotnet5.6",
+				"portable-net45+win8"
+			]
 		}
 	}
 }
