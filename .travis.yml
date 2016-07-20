@@ -1,4 +1,4 @@
-language: csharp
+language: generic
 
 before_install:
   - export DOTNET_SDK_URL="https://go.microsoft.com/fwlink/?LinkID=809129"
@@ -15,14 +15,8 @@ before_install:
 
 install:
   # Display dotnet version info
-  - which dotnet;
-    if [ $? -eq 0 ]; then
-      echo "Using dotnet:";
-      dotnet --info;
-    else
-      echo "dotnet.exe not found"
-      exit 1;
-    fi
+  - echo "Using dotnet:";
+  - dotnet --info;
 
   # Restore dependencies
   - dotnet restore
